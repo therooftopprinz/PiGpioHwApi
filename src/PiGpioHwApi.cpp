@@ -1,4 +1,4 @@
-#include <IHwApi.hpp>
+#include <HwApi.hpp>
 #include <exception>
 #include <pigpiod_if2.h>
 #include <Logger.hpp>
@@ -11,11 +11,10 @@ namespace hwapi
 class PiGpio
 {
 public:
-    std::shared_ptr<ISpi>  getSpi(uint8_t channel);
-    std::shared_ptr<IGpio> getGpio();
-    void setup();
-    void teardown();
-    static PiGpio& getInstance();
+    static std::shared_ptr<ISpi>  createSpi(uint8_t channel);
+    static std::shared_ptr<IGpio> createGpio();
+    static void setup();
+    static void teardown();
     static int getPiGpioHandle() {return mPiGpioHandle;}
     static int mPiGpioHandle = -1;
 };
@@ -56,9 +55,6 @@ public:
     {
         return spi_xfer(PiGpio::getPiGpioHandle(), mHandle, (char*)dataOut, (char*)dataIn, count);
     }
-
-private:
-    int mHandle;
 };
 
 class Gpio : public IGpio
@@ -94,7 +90,6 @@ public:
         return callback_cancel(pCallbackId);
     }
 
-
 private:
     static void cb(int pi, unsigned user_gpio, unsigned level, uint32_t tick)
     {
@@ -108,7 +103,7 @@ std::shared_ptr<ISpi> PiGpio::createSpi(uint8_t channel)
     return std::make_shared<Spi>(channel);
 }
 
-std::shared_ptr<IGpio> PiGpio::getGpio()
+std::shared_ptr<IGpio> PiGpio::createGpio()
 {
     return std::make_shared<Gpio>();
 }
@@ -129,6 +124,26 @@ void PiGpio::teardown()
     {
         pigpio_stop(mPiGpioHandle);
     }
+}
+
+void setup()
+{
+    PiGpio::setup();
+}
+
+void teardown()
+{
+    PiGpio::teardown();
+}
+
+std::shared_ptr<ISpi>  getSpi(uint8_t pChannel)
+{
+    return PiGpio::createSpi(pChannel)
+}
+
+std::shared_ptr<IGpio> getGpio()
+{
+    return PiGpio::createGpio();
 }
 
 }
