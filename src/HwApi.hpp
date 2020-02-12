@@ -35,18 +35,6 @@ struct IGpio
     virtual int deregisterCallback(int pCallbackId) = 0;
 };
 
-class PiGpio
-{
-public:
-    std::shared_ptr<ISpi>  getSpi(uint8_t channel);
-    std::shared_ptr<IGpio> getGpio();
-    void setup();
-    void teardown();
-    static PiGpio& getInstance();
-    static int getPiGpioHandle() {return mPiGpioHandle;}
-    static int mPiGpioHandle = -1;
-};
-
 } // hwapi
 
 #endif // __HWAPI_IHWAPI_HPP__

@@ -8,6 +8,18 @@
 namespace hwapi
 {
 
+class PiGpio
+{
+public:
+    std::shared_ptr<ISpi>  getSpi(uint8_t channel);
+    std::shared_ptr<IGpio> getGpio();
+    void setup();
+    void teardown();
+    static PiGpio& getInstance();
+    static int getPiGpioHandle() {return mPiGpioHandle;}
+    static int mPiGpioHandle = -1;
+};
+
 class Spi : public ISpi
 {
 public:
