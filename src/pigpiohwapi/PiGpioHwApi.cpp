@@ -1,9 +1,7 @@
-#include <HwApi.hpp>
+#include <pigpiohwapi/HwApi.hpp>
 #include <exception>
 #include <pigpiod_if2.h>
-#include <Logger.hpp>
 #include <iomanip>
-#include <SX127x.hpp>
 
 namespace hwapi
 {
