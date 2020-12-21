@@ -1,4 +1,4 @@
-#include <pigpiohwapi/HwApi.hpp>
+#include <hwapi/HwApi.hpp>
 #include <exception>
 #include <pigpiod_if2.h>
 #include <iomanip>
