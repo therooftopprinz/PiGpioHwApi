@@ -112,6 +112,8 @@ private:
     static std::array<std::function<void(uint32_t tick)>, 20> fnCb;
 };
 
+std::array<std::function<void(uint32_t tick)>, 20> Gpio::fnCb;
+
 std::shared_ptr<ISpi> PiGpio::createSpi(uint8_t channel)
 {
     return std::make_shared<Spi>(channel);
