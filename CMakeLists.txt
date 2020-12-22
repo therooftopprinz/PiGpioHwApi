@@ -19,6 +19,8 @@ execute_process(
     COMMAND ${CMAKE_SOURCE_DIR}/find_header_path ${CMAKE_BINARY_DIR} pigpio.h
     OUTPUT_VARIABLE pigpio_INCLUDE_DIR)
 
+message("-- Finding pigpio from ${CMAKE_BINARY_DIR} - found at ${pigpio_INCLUDE_DIR}")
+
 add_library(hwapi INTERFACE)
 target_include_directories(hwapi INTERFACE src/)
 
