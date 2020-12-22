@@ -14,8 +14,10 @@ public:
     static void setup();
     static void teardown();
     static int getPiGpioHandle() {return mPiGpioHandle;}
-    static int mPiGpioHandle = -1;
+    static int mPiGpioHandle;
 };
+
+int PiGpio::mPiGpioHandle = -1;
 
 class Spi : public ISpi
 {
@@ -33,7 +35,7 @@ public:
 
     ~Spi()
     {
-        if (spi_close>=0)
+        if (mHandle>=0)
         {
             spi_close(PiGpio::getPiGpioHandle(), mHandle);
         }
@@ -53,11 +55,25 @@ public:
     {
         return spi_xfer(PiGpio::getPiGpioHandle(), mHandle, (char*)dataOut, (char*)dataIn, count);
     }
+
+private:
+    int mHandle = -1;
 };
 
 class Gpio : public IGpio
 {
 public:
+    int setMode(unsigned pGpio, PinMode pMode)
+    {
+        int pinmode = PI_INPUT;
+        if (PinMode::OUTPUT == pMode)
+        {
+            pinmode = PI_OUTPUT;
+        }
+        auto rv = set_mode(PiGpio::getPiGpioHandle(), pGpio, pinmode);
+        return rv;
+    }
+
     int get(unsigned pGpio) override
     {
         return gpio_read(PiGpio::getPiGpioHandle(), pGpio);
@@ -136,7 +152,7 @@ void teardown()
 
 std::shared_ptr<ISpi>  getSpi(uint8_t pChannel)
 {
-    return PiGpio::createSpi(pChannel)
+    return PiGpio::createSpi(pChannel);
 }
 
 std::shared_ptr<IGpio> getGpio()
