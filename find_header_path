@@ -1,2 +1,2 @@
 #!/bin/sh
-echo -n $(find "$(pwd)" -type f -name $1 -exec dirname {} \;)
+echo -n $(find $1 -type f -name $2 -exec dirname {} \;)

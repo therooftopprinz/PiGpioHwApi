@@ -16,7 +16,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(pigpio)
 
 execute_process(
-    COMMAND ${CMAKE_SOURCE_DIR}/find_header_path pigpio.h
+    COMMAND ${CMAKE_SOURCE_DIR}/find_header_path ${CMAKE_BINARY_DIR} pigpio.h
     OUTPUT_VARIABLE pigpio_INCLUDE_DIR)
 
 add_library(hwapi INTERFACE)
