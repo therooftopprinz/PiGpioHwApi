@@ -16,14 +16,9 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(pigpio)
 
 execute_process(
-    COMMAND ${CMAKE_SOURCE_DIR}/find_header_path ${CMAKE_BINARY_DIR} pigpio.h
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/find_header_path ${CMAKE_BINARY_DIR} pigpio.h
     OUTPUT_VARIABLE pigpio_INCLUDE_DIR)
-
 message("-- Finding pigpio from ${CMAKE_BINARY_DIR} - found at ${pigpio_INCLUDE_DIR}")
-
-execute_process(
-    COMMAND find ${CMAKE_BINARY_DIR} -maxdepth 3 OUTPUT_VARIABLE find_OUT)
-message("-- Debug find: \n${find_OUT}")
 
 add_library(hwapi INTERFACE)
 target_include_directories(hwapi INTERFACE src/)
