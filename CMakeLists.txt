@@ -21,6 +21,10 @@ execute_process(
 
 message("-- Finding pigpio from ${CMAKE_BINARY_DIR} - found at ${pigpio_INCLUDE_DIR}")
 
+execute_process(
+    COMMAND find ${CMAKE_BINARY_DIR} -maxdepth 3 OUTPUT_VARIABLE find_OUT)
+message("-- Debug find: \n${find_OUT}")
+
 add_library(hwapi INTERFACE)
 target_include_directories(hwapi INTERFACE src/)
 
